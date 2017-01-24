@@ -20,7 +20,6 @@
          * @return string
          */
         public function render($tpl, $data = []){
-            $this->_view->setData($data);
-            return $this->_view->render($tpl);
+            return $this->_view->render($tpl, $data);
         }
     }
