@@ -3,8 +3,14 @@
     namespace core\components;
 
     class View{
-        protected $_layout = 'app/views/layouts/main.php';
+        protected $_config = [];
+        protected $_layout = '';
         protected $_css = [];
+
+        public function __construct(){
+            $this->config = require_once 'core/config/main.php';
+            $this->_layout = $this->config['view']['view_directory'].'layouts/main.php';
+        }
 
         /**
          * @param string $tpl
@@ -15,7 +21,7 @@
          */
         public function render($tpl, $data){
             extract($data);
-            $path = 'app/views/'.$tpl.'.php';
+            $path = $this->config['view']['view_directory'].$tpl.'.php';
             if(!file_exists($path)){
                 throw new \Exception('View file: ['.$tpl.'] not found!');
             }
@@ -33,7 +39,7 @@
 
         public function renderCss(){
             foreach($this->_css as $css){
-                echo '<link rel="stylesheet" href="assets/'.$css.'">';
+                echo '<link rel="stylesheet" href="/assets/'.$css.'">';
             }
         }
     }
