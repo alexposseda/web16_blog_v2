@@ -11,6 +11,7 @@
             'email'    => 'Wrong Email Formatt!',
             'required' => 'Field must not be empty!',
             'unique' => 'Field must be unique!',
+            'compare' => 'Field not совпадает!'
         ];
 
         /**
@@ -99,11 +100,21 @@
                 throw new \Exception('property tableName not set in unique validator');
             }
             $db = Db::getDb();
-            $sql = "SELECT * FROM ".$params['tableName']."WHERE ".$fieldName." = ".$db->getSafeData($this->_data[$fieldName]);
+            $sql = "SELECT * FROM {$params['tableName']} WHERE {$fieldName} = {$db->getSafeData($this->_data[$fieldName])}";
 
             $result = $db->query($sql);
             if($result->num_rows > 0){
                 $this->_errors[$fieldName][] = $message;
+            }
+        }
+
+        protected function compare($fieldName, $params = []){
+            $message = $this->_defaultMessages['compare'];
+            if(isset($params['message'])){
+                $message = $params['message'];
+            }
+            if($this->_data[$fieldName] != $this->_data[$params['field']]){
+                $this->_errors[$params['field']][] = $message;
             }
         }
 

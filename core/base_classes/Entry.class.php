@@ -60,15 +60,24 @@
             return null;
         }
 
+        public function load($data){
+            foreach($data as $propName => $propValue){
+                $this->$propName = $propValue;
+            }
+
+            return $this;
+        }
+
         abstract public static function className();
 
         public function create($data){
             $fields = implode(',', array_keys($data));
-            $sql = "INSERT INTO ".static::$_tableName." ({$fields}) VALUE ";
+            $sql = "INSERT INTO ".static::$_tableName." ({$fields}) VALUE (";
             foreach($data as $value){
                 $sql .= $this->_db->getSafeData($value).',';
             }
             $sql = substr($sql, 0, -1);
+            $sql .= ')';
             $result = $this->_db->query($sql);
             if($result){
                 return $this->_db->getLastInsertId();

@@ -35,10 +35,16 @@
         /**
          * @param string $sql
          *
-         * @return bool|\mysqli_result
+         * @return \mysqli_result
+         * @throws \Exception
          */
         public function query($sql){
-            return $this->_mysqli->query($sql);
+            $result = $this->_mysqli->query($sql);
+            if(!$result){
+                throw new \Exception($this->_mysqli->error."<br>$sql");
+            }
+
+            return $result;
         }
 
         /**

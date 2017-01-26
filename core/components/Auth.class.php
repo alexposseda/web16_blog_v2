@@ -4,7 +4,7 @@
 
     class Auth{
         public static function isGuest(){
-            if(!empty($_SESSION['user'])){
+            if(empty($_SESSION['user'])){
                 return true;
             }
             return false;

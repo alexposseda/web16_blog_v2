@@ -17,6 +17,7 @@
          * @return bool
          */
         public function load($data){
+            //todo filter must be here
             foreach($data as $propName => $propValue){
                 if(property_exists(static::class, $propName)){
                     $this->$propName = $propValue;
@@ -41,5 +42,9 @@
 
         public function getErrors(){
             return $this->_errors;
+        }
+
+        public function getData(){
+            return $this->_data;
         }
     }
