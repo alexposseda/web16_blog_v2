@@ -1,20 +1,32 @@
 <?php
     /**
      * @var \core\components\View $this
-     * @var \app\models\PostEntry[] $posts
+     * @var \app\models\PostForm $postForm
      */
 
     $this->title = 'My New Title';
-    $this->addCssLink('css/style_main.css');
+    var_dump($postForm->getErrors());
 ?>
-<h1>Hello from main</h1>
 
-<?php
-    if(!is_null($posts)){
-        foreach($posts as $post){
-            echo $post->title.'<br>';
-        }
-    }else{
-        echo 'no posts found';
-    }
-?>
+<form method="POST">
+    <div>
+        <input type="text" name="title" placeholder="title">
+    </div>
+    <div>
+        <textarea name="content" cols="100" rows="5"></textarea>
+    </div>
+    <div>
+        <select name="category_id">
+            <option value="1">PHP</option>
+            <option value="2">JS</option>
+        </select>
+    </div>
+    <div>
+        <select name="status">
+            <option value="not_publish" selected>Черновик</option>
+            <option value="moderate">Опубликовать</option>
+        </select>
+    </div>
+    <button>Create</button>
+</form>
+

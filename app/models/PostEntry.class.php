@@ -10,5 +10,4 @@
         public static function className(){
             return __CLASS__;
         }
-
     }

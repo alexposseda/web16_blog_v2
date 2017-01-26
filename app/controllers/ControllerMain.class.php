@@ -2,21 +2,19 @@
 
     namespace app\controllers;
 
-    use app\models\PostEntry;
+    use app\models\PostForm;
     use core\base_classes\Controller;
 
     class ControllerMain extends Controller{
         public function actionIndex(){
-            $post = new PostEntry(1);
-            $data = [
-                'title' => 'New title',
-                'content' => 'some Content',
-                'pubdate' => time(),
-                'user_id' => NULL
-            ];
-            $post->update($data);
+            $postForm = new PostForm();
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                if($postForm->load($_POST)){
+                    //save new post to db
+                }
+            }
 
-            return $this->render('main');
+            return $this->render('main', ['postForm' => $postForm]);
         }
 
     }
