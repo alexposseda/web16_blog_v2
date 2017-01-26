@@ -1,6 +1,7 @@
 <?php
     use core\components\Url;
 
+    session_start();
     function __autoload($className){
         $className = str_replace('\\', '/', $className);
         require_once $className.'.class.php';
