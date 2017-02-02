@@ -111,4 +111,8 @@
 
             return false;
         }
+
+        public static function getTableName(){
+            return static::$_tableName;
+        }
     }

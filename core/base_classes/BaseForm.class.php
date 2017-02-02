@@ -8,6 +8,7 @@
         protected $_errors = [];
         protected $_data;
         protected $_validator = null;
+        protected $_messages = [];
 
         abstract public function getRules();
 
@@ -46,5 +47,19 @@
 
         public function getData(){
             return $this->_data;
+        }
+
+        public function addError($field, $msg){
+            $this->_errors[$field][] = $msg;
+            return $this;
+        }
+
+        public function getMessages(){
+            return $this->_messages;
+        }
+
+        public function addMessage($type, $msg){
+            $this->_messages[$type][] = $msg;
+            return $this;
         }
     }

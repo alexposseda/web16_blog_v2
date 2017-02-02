@@ -2,6 +2,7 @@
 
     namespace app\controllers;
 
+    use app\models\LoginForm;
     use app\models\PostForm;
     use app\models\RegistrationForm;
     use app\models\UserEntry;
@@ -28,7 +29,6 @@
             $regForm = new RegistrationForm();
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 if($regForm->load($_POST)){
-                    $regForm->doRegister();
                     $user = new UserEntry();
                     $user = $user->load($regForm->getData())->doRegistration();
                     if(!is_null($user)){
@@ -52,5 +52,28 @@
 
             Auth::logout();
             header("Location: /");
+        }
+
+        public function actionLogin(){
+            if(!Auth::isGuest()){
+                throw new NotFoundHttpException('Вы уже авторизировались!');
+            }
+            $model = new LoginForm();
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                if($model->load($_POST)){
+                    $user = $model->doLogin();
+                    if(!is_null($user)){
+                        Auth::login([
+                                        'id'   => $user->id,
+                                        'role' => $user->role,
+                                    ]);
+
+                        header('Location: /');
+                    }else{
+                        $model->addMessage('error', 'Вы ввели неверные данные!');
+                    }
+                }
+            }
+            return $this->render('login', ['model' => $model]);
         }
     }
