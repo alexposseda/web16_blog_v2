@@ -11,17 +11,17 @@
         protected $_extension;
 
         public function __construct($sourceImageFileName){
-            $c = require_once 'core/config/main.php';
+            $c = require 'core/config/main.php';
             $this->_config = $c['images'];
             if(empty($this->_config)){
                 throw new \Exception('Config for Image not found!');
             }
 
-            $this->_path = pathinfo($sourceImageFileName, PATHINFO_DIRNAME);
+            $this->_path = $c['storage_path'].pathinfo($sourceImageFileName, PATHINFO_DIRNAME);
             $this->_sourceImageName = pathinfo($sourceImageFileName, PATHINFO_BASENAME);
             $this->_extension = pathinfo($sourceImageFileName, PATHINFO_EXTENSION);
 
-            $this->_sourceImage = $this->createImageFrom($sourceImageFileName);
+            $this->_sourceImage = $this->createImageFrom($c['storage_path'].$sourceImageFileName);
         }
 
         public function createThumbs($type = 'base'){

@@ -9,54 +9,39 @@
 
 
 
-//    $controllerName = Url::getUrlSegment(0);
-//    $actionName = Url::getUrlSegment(1);
-//
-//    if(is_null($controllerName)){
-//        $controllerName = 'ControllerMain';
-//    }else{
-//        $controllerName = 'Controller'.ucfirst($controllerName);
-//    }
-//
-//    if(is_null($actionName)){
-//        $actionName = 'actionIndex';
-//    }else{
-//        $actionName = 'action'.ucfirst($actionName);
-//    }
-//
-//    try{
-//        if(!file_exists('app/controllers/'.$controllerName.'.class.php')){
-//            throw new \core\exceptions\NotFoundHttpException('This page not found!');
-//        }
-//        $controllerName = '\app\controllers\\'.$controllerName;
-//        $controller = new $controllerName();
-//        if(!method_exists($controller, $actionName)){
-//            throw new \core\exceptions\NotFoundHttpException('This page not found!');
-//        }
-//        $output = $controller->$actionName();
-//
-//        echo $output;
-//
-//    }catch(\core\exceptions\NotFoundHttpException $e){
-//        header('HTTP/1.1 404 Not Found');
-//        //todo add view!
-//        echo $e->getMessage();
-//    }catch(Exception $e){
-//        echo 'Error! message: '.$e->getMessage();
-//    }
+    $controllerName = Url::getUrlSegment(0);
+    $actionName = Url::getUrlSegment(1);
 
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-//        //todo проверить файл
-        $fileName = 'storage/'.time().'.'.pathinfo($_FILES['picture']['name'], PATHINFO_EXTENSION);
-        move_uploaded_file($_FILES['picture']['tmp_name'], $fileName);
-
-        $image = new \core\components\Image($fileName);
-        $image->createThumbs('avatar');
+    if(is_null($controllerName)){
+        $controllerName = 'ControllerMain';
+    }else{
+        $controllerName = 'Controller'.ucfirst($controllerName);
     }
-?>
 
-<form method="POST" enctype="multipart/form-data">
-    <input type="file" name="picture">
-    <button>SUBMIT</button>
-</form>
+    if(is_null($actionName)){
+        $actionName = 'actionIndex';
+    }else{
+        $actionName = 'action'.ucfirst($actionName);
+    }
+
+    try{
+        if(!file_exists('app/controllers/'.$controllerName.'.class.php')){
+            throw new \core\exceptions\NotFoundHttpException('This page not found!');
+        }
+        $controllerName = '\app\controllers\\'.$controllerName;
+        $controller = new $controllerName();
+        if(!method_exists($controller, $actionName)){
+            throw new \core\exceptions\NotFoundHttpException('This page not found!');
+        }
+        $output = $controller->$actionName();
+
+        echo $output;
+
+    }catch(\core\exceptions\NotFoundHttpException $e){
+        header('HTTP/1.1 404 Not Found');
+        //todo add view!
+        echo $e->getMessage();
+    }catch(Exception $e){
+        echo 'Error! message: '.$e->getMessage();
+    }
+

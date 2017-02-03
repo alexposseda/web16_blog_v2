@@ -16,7 +16,7 @@
                 'email' => $this->email,
                 'name' => $this->name,
                 'password' => md5($this->password),
-                'avatar' => '',
+                'avatar' => (empty($this->avatar)) ? '' : $this->avatar,
             ];
             $res = $this->create($data);
             if($res){

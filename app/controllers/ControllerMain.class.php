@@ -22,13 +22,13 @@
             return $this->render('main', ['postForm' => $postForm]);
         }
 
-        public function actionReg(){
+        public function actionRegistration(){
             if(!Auth::isGuest()){
                 throw new NotFoundHttpException();
             }
             $regForm = new RegistrationForm();
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                if($regForm->load($_POST)){
+                if($regForm->load($_POST) and $regForm->uploadAvatar()){
                     $user = new UserEntry();
                     $user = $user->load($regForm->getData())->doRegistration();
                     if(!is_null($user)){

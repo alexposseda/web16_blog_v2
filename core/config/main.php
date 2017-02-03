@@ -3,8 +3,8 @@
         'view'   => [
             'view_directory' => 'app/views/'
         ],
+        'storage_path' => 'storage/',
         'images' => [
-            'storage_path' => 'storage/',
             'sizes'        => [
                 'base'   => [
                     [
@@ -21,7 +21,8 @@
                 'avatar' => [
                     [
                         'width'  => 100,
-                        'height' => 100
+                        'height' => 100,
+                        'prefix' => 'avatar_'
                     ]
                 ]
             ]
