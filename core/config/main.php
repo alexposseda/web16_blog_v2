@@ -8,19 +8,19 @@
             'sizes'        => [
                 'base'   => [
                     [
-                        640,
-                        480,
-                        'middle'
+                        'width'  => 640,
+                        'height' => 480,
+                        'prefix' => 'middle_'
                     ],
                     [
-                        320,
-                        240,
-                        'small'
+                        'width'  => 320,
+                        'height' => 240,
+                        'prefix' => 'small_'
                     ]
                 ],
                 'avatar' => [
-                    100,
-                    100
+                    'width'  => 100,
+                    'height' => 100
                 ]
             ]
         ],
