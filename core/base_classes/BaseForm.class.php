@@ -45,6 +45,9 @@
             return $this->_errors;
         }
 
+        /**
+         * @return array
+         */
         public function getData(){
             return $this->_data;
         }

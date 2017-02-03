@@ -96,7 +96,7 @@
 
             $result = $this->_db->query($sql);
             if($result){
-                return $this->_db->getLastInsertId();
+                return true;
             }
 
             return false;
