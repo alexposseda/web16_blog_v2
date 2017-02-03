@@ -12,16 +12,16 @@
 
         public function __construct($sourceImageFileName){
             $c = require_once 'core/config/main.php';
-            $this->_config = $c['image'];
+            $this->_config = $c['images'];
             if(empty($this->_config)){
                 throw new \Exception('Config for Image not found!');
             }
 
-            $this->_sourceImage = $this->createImageFrom($sourceImageFileName);
-
             $this->_path = pathinfo($sourceImageFileName, PATHINFO_DIRNAME);
             $this->_sourceImageName = pathinfo($sourceImageFileName, PATHINFO_BASENAME);
             $this->_extension = pathinfo($sourceImageFileName, PATHINFO_EXTENSION);
+
+            $this->_sourceImage = $this->createImageFrom($sourceImageFileName);
         }
 
         public function createThumbs($type = 'base'){
@@ -29,25 +29,6 @@
 
             foreach($thumbsSizes as $newSize){
                 $this->createNewImage($newSize);
-
-//                $thumb = imagecreatetruecolor($destinationSize[0], $destinationSize[1]);
-//                $coordinates = [
-//                    $originalSize[0]/2-$destinationSize[0]/2,
-//                    $originalSize[1]/2-$destinationSize[1]/2,
-//                ];
-//                imagecopyresampled($thumb, $originalImage, 0,0,0,0, $destinationSize[0], $destinationSize[0]*$k, $originalSize[0], $originalSize[1]);
-//                $name = $this->_config['images']['storage_path'].time().'_'.$destinationSize[0].'x'.$destinationSize[1].'.'.$extension;
-//                switch($extension){
-//                    case 'jpg':
-//                    case 'jpeg':
-//                        imagejpeg($thumb, $name);
-//                        break;
-//                    case 'png' :
-//                        imagepng($thumb, $name);
-//                        break;
-//                }
-//                $this->_thumbs[] = $name;
-//                imagedestroy($thumb);
             }
         }
 
@@ -88,10 +69,10 @@
             switch($this->_extension){
                 case 'jpg':
                 case 'jpeg':
-                    $res = imagejpeg($image, $this->_path.$imageName);
+                    $res = imagejpeg($image, $this->_path.DIRECTORY_SEPARATOR.$imageName);
                     break;
                 case 'png' :
-                    $res = imagepng($image, $this->_path.$imageName);
+                    $res = imagepng($image, $this->_path.DIRECTORY_SEPARATOR.$imageName);
                     break;
             }
             if(!$res){
@@ -100,5 +81,11 @@
 
             $this->_thumbs[] = $imageName;
             imagedestroy($image);
+        }
+
+        public function __destruct(){
+            if(!is_null($this->_sourceImage)){
+                imagedestroy($this->_sourceImage);
+            }
         }
     }

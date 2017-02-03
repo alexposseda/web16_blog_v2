@@ -50,15 +50,9 @@
 //        //todo проверить файл
         $fileName = 'storage/'.time().'.'.pathinfo($_FILES['picture']['name'], PATHINFO_EXTENSION);
         move_uploaded_file($_FILES['picture']['tmp_name'], $fileName);
-//        $src_image = imagecreatefromjpeg($fileName);
-        //        $sizes = getimagesize($fileName);
-        //        $dest_img = imagecreate(640, 480);
-        //        imagecopyresized($dest_img, $src_image, 0,0, 0, 0, 640, 480, $sizes[0], $sizes[1]);
-        //        imagejpeg($dest_img, 'storage/pic1.png');
-        //        imagedestroy($dest_img);
 
         $image = new \core\components\Image($fileName);
-        $image->createThumbs();
+        $image->createThumbs('avatar');
     }
 ?>
 
