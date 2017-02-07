@@ -28,6 +28,9 @@
             ob_start("ob_gzhandler");
             include $path;
             $content = ob_get_clean();
+            if($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'){
+                return $content;
+            }
             ob_start("ob_gzhandler");
             include $this->_layout;
             return ob_get_clean();
